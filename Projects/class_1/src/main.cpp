@@ -2,40 +2,49 @@
 #include "PinChangeInterrupt.h"
 #include <TaskScheduler.h>
 
-
+// Define Pins
 #define RED_LED 9
 #define YELLOW_LED 10
 #define GREEN_LED 11
 #define BUTTON_B1 2
 #define BUTTON_B2 3
 #define BUTTON_B3 4
-#define POTENTIOMETER A0  // 가변저항 핀
+#define POTENTIOMETER A0
 
+// Define Variables
 int mode = 0;
 int redTime = 2000, yellowTime = 500, greenTime = 2000;
 int ledBrightness = 255; // LED 밝기 (기본값 255)
 int red = 0, yellow = 0, green = 0;
 
+// Define TaskScheduler
 Scheduler runner;
+
+// Define Functions
 void taskRedLED();
 void taskYellowLED();
 void taskGreenLED();
 void taskGreenBlink();
-void taskYellowLED2(); // 기본동작
-void taskallLED(); // B2 모드
-void disableAllTasks(); // 모든 Task 비활성화
-void readBrightness();  // LED가 켜질 때 밝기 읽기
-void CheckSerial(); // 시리얼 입력 확인
+void taskYellowLED2();
+void taskallLED(); 
+void disableAllTasks(); 
+void readBrightness(); 
+void CheckSerial();
 
+// Default Tasks
 Task tRedLED(0, TASK_ONCE, &taskRedLED, &runner, false);
 Task tYellowLED(0, TASK_ONCE, &taskYellowLED, &runner, false);
 Task tGreenLED(0, TASK_ONCE, &taskGreenLED, &runner, false);
 Task tGreenBlink(0, TASK_ONCE, &taskGreenBlink, &runner, false);
-Task tYellowLED2(0, TASK_ONCE, &taskYellowLED2, &runner, false); // 기본동작
+Task tYellowLED2(0, TASK_ONCE, &taskYellowLED2, &runner, false);
+
+// B2 Mode Task
 Task tBlinkallLED(0, TASK_FOREVER, &taskallLED, &runner, false);
+
+// Serial Task
 Task tCheckSerial(100, TASK_FOREVER, &CheckSerial, &runner, true);
 
-
+// FALLING -> RED LED ON -> FALLING -> Default Task start
 void handleInterrupt1(){
   if (mode != 1) {
     mode = 1;
@@ -53,6 +62,7 @@ void handleInterrupt1(){
   Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
 }
 
+// FALLING -> tBlinkallLED start -> FALLING -> Default Task start
 void handleInterrupt2(){
   if (mode != 2) {
     mode = 2;
@@ -64,8 +74,9 @@ void handleInterrupt2(){
     tBlinkallLED.disable();
     tRedLED.restart();
   }
-
 }
+
+// FALLING -> ALL LED OFF -> FALLING -> Default Task start
 void handleInterrupt3(){
   mode = (mode == 3) ? 0 : 3;
   disableAllTasks();
@@ -75,6 +86,7 @@ void handleInterrupt3(){
 void setup() {
     Serial.begin(9600);
 
+    // PinMode 설정
     pinMode(RED_LED, OUTPUT);
     pinMode(YELLOW_LED, OUTPUT);
     pinMode(GREEN_LED, OUTPUT);
@@ -83,10 +95,11 @@ void setup() {
     pinMode(BUTTON_B3, INPUT_PULLUP);
     pinMode(POTENTIOMETER, INPUT);
     
+    // Attach Interrupts to Buttons
     attachPCINT(digitalPinToPCINT(BUTTON_B1), handleInterrupt1, FALLING);
     attachPCINT(digitalPinToPCINT(BUTTON_B2), handleInterrupt2, FALLING);
     attachPCINT(digitalPinToPCINT(BUTTON_B3), handleInterrupt3, FALLING);
-
+    // Default Task Start
     tRedLED.enable();
 }
 
@@ -94,13 +107,21 @@ void loop() {
     runner.execute();
 }
 
+// 실시간 상태 출력
+// Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
+
+
+// 모든 Task를 비활성화
 void disableAllTasks() {
+    // 모든 Task 비활성화
     tRedLED.disable();
     tYellowLED.disable();
     tGreenLED.disable();
     tGreenBlink.disable();
-    tYellowLED2.disable(); // 기본동작
+    tYellowLED2.disable();
+    // B2 모드 Task 비활성화
     tBlinkallLED.disable();
+    // LED 모두 끄기
     analogWrite(RED_LED, 0);
     analogWrite(YELLOW_LED, 0);
     analogWrite(GREEN_LED, 0);
@@ -108,15 +129,16 @@ void disableAllTasks() {
     Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
 }
 
-// LED가 켜질 때 밝기 읽기
+// 가변저항 값 읽기
 void readBrightness() {
     int potValue = analogRead(POTENTIOMETER);  // 가변저항 값 읽기 (0~1023)
     ledBrightness = map(potValue, 0, 1023, 0, 255);  // 0~255 범위로 변환
 }
-
+// Default Task
+// RED LED ON -> redTime -> RED LED OFF -> tYellowLED start
 void taskRedLED() {
     if(mode != 0) return;
-    readBrightness();  // LED가 켜지기 전에 밝기 설정
+    readBrightness();
     analogWrite(RED_LED, ledBrightness);
     red = 1;
     Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
@@ -126,7 +148,7 @@ void taskRedLED() {
     Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
     tYellowLED.restart();
 }
-
+// YELLOW LED ON -> yellowTime -> YELLOW LED OFF -> tGreenLED start
 void taskYellowLED() {
     if(mode != 0) return;
     readBrightness();
@@ -138,9 +160,8 @@ void taskYellowLED() {
     yellow = 0;
     Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
     tGreenLED.restart();
-
 }
-
+// GREEN LED ON -> greenTime -> GREEN LED OFF -> tGreenBlink start
 void taskGreenLED() {
     if(mode != 0) return;
         readBrightness();
@@ -150,24 +171,26 @@ void taskGreenLED() {
         delay(greenTime);
         tGreenBlink.restart();
 }
-
+// Green LED 3회 깜빡이기 -> tYellowLED2 start
 void taskGreenBlink() {
-
     if(mode != 0) return;
         readBrightness();
         for (int i = 0; i < 3; i++) {
-            green = 1;
-            Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
-            analogWrite(GREEN_LED, ledBrightness);
-            delay(166);
-            analogWrite(GREEN_LED, 0);
             green = 0;
+            Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
+            analogWrite(GREEN_LED, 0);
+            delay(166);
+            analogWrite(GREEN_LED, ledBrightness);
+            green = 1;
             Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
             delay(166);
         }
+        analogWrite(GREEN_LED, 0);
+        green = 0;
+        Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
     tYellowLED2.restart();
 }
-
+// Yellow LED ON -> yellowTime -> YELLOW LED OFF -> Default Task start
 void taskYellowLED2() {
     if(mode != 0) return;
         readBrightness();
@@ -197,7 +220,7 @@ void taskallLED() {
     Serial.println(String(mode) + "," + String(red) + "," + String(yellow) + "," + String(green) + "," + String(ledBrightness) + "\n");
     delay(500);
 }
-
+// 시리얼 통신을 통해 redTime, yellowTime, greenTime을 변경
 void CheckSerial() {
     if (Serial.available()) {
         String data = Serial.readStringUntil('\n');

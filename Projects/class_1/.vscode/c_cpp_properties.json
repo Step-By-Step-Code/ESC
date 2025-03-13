@@ -8,10 +8,10 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/include",
-                "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/src",
-                "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/.pio/libdeps/uno/PinChangeInterrupt/src",
-                "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/.pio/libdeps/uno/TaskScheduler/src",
+                "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/include",
+                "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/src",
+                "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/.pio/libdeps/uno/PinChangeInterrupt/src",
+                "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/.pio/libdeps/uno/TaskScheduler/src",
                 "C:/Users/ksmin/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/ksmin/.platformio/packages/framework-arduino-avr/variants/standard",
                 "C:/Users/ksmin/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
@@ -24,10 +24,10 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/include",
-                    "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/src",
-                    "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/.pio/libdeps/uno/PinChangeInterrupt/src",
-                    "C:/Users/ksmin/OneDrive - inu.ac.kr/바탕 화면/class_1/.pio/libdeps/uno/TaskScheduler/src",
+                    "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/include",
+                    "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/src",
+                    "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/.pio/libdeps/uno/PinChangeInterrupt/src",
+                    "C:/Users/ksmin/OneDrive - inu.ac.kr/문서/PlatformIO/Projects/class_1/.pio/libdeps/uno/TaskScheduler/src",
                     "C:/Users/ksmin/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/ksmin/.platformio/packages/framework-arduino-avr/variants/standard",
                     "C:/Users/ksmin/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
@@ -39,7 +39,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60117",
+                "PLATFORMIO=60118",
                 "ARDUINO_AVR_UNO",
                 "F_CPU=16000000L",
                 "ARDUINO_ARCH_AVR",
