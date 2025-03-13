@@ -10,7 +10,7 @@
 ### M1 Youtube Link CLICK [Here]()
 ### Arduino System Explanation Click [Here](./Projects/class_1/)
 - code Explanation [Here](./Projects/class_1/src/main.cpp)
-### p5.js Code Explanation Click [Here](./Projects/p5js_M1/)
+### p5.js Code System Click [Here](./Projects/p5js_M1/)
 - code Explanation [Here](./Projects/p5js_M1/sketch.js)
 
 
