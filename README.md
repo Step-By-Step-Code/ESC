@@ -1,4 +1,4 @@
-# Embedded System Communication Repo
+# Embedded Communication System Repo
 <!-- 
 영상에서 요구
 모든 동작이 정상적으로 동작함을 보여야함.
