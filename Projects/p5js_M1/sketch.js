@@ -8,10 +8,13 @@ let redState = 0, yellowState = 0, greenState = 0, Brightness=255; // 신호등 
 function setup() {
   createCanvas(500, 300);
 
+  // Connect 버튼 생성
   let connectButton = createButton("Connect to Arduino");
   connectButton.position(10, 10);
   connectButton.mousePressed(connectToArduino); // 누를 시 함수실행
 
+
+  // Slider 생성
   redSlider = createSlider(100, 2000, 2000, 100);
   redSlider.position(10, 100);
   yellowSlider = createSlider(100, 2000, 500, 100);
@@ -19,16 +22,18 @@ function setup() {
   greenSlider = createSlider(100, 2000, 2000, 100);
   greenSlider.position(10, 160);
 
+  // Slider 이벤트 발생 시 sendData 함수 실행
   redSlider.input(sendData);
   yellowSlider.input(sendData);
   greenSlider.input(sendData);
 }
 
+// 프레임마다 실행
 function draw() {
   background(220);
   textSize(16);
 
-  fill('black'); // 텍스트 색상을 검정으로 설정
+  fill('black'); 
   text("빨강 시간: " + redSlider.value() + " ms", 200, 115);
   text("노랑 시간: " + yellowSlider.value() + " ms", 200, 145);
   text("초록 시간: " + greenSlider.value() + " ms", 200, 175);
@@ -52,13 +57,13 @@ function drawTrafficLight() {
   fill(greenState ? 'green' : 'gray');
   ellipse(180 + spacing * 2, 240, size, size);
 }
-
+// 아두이노 연결
 async function connectToArduino() {
   try {
-    serialPort = await navigator.serial.requestPort();
+    serialPort = await navigator.serial.requestPort(); // 시리얼 포트 요청
     await serialPort.open({ baudRate: 9600 });
-    writer = serialPort.writable.getWriter();
-    reader = serialPort.readable.getReader();
+    writer = serialPort.writable.getWriter(); // writer 객체 생성
+    reader = serialPort.readable.getReader(); // reader 객체 생성
     console.log("Connected to Arduino!");
     readData();
   } catch (err) {
@@ -66,6 +71,7 @@ async function connectToArduino() {
   }
 }
 
+// arduino로 데이터 전송
 async function sendData() {
   if (writer) {
     let data = `${redSlider.value()},${yellowSlider.value()},${greenSlider.value()}\n`;
@@ -76,7 +82,7 @@ async function sendData() {
     console.log("Serial connection not established.");
   }
 }
-
+// arduino 데이터 읽기
 async function readData() {
     let dataBuffer = "";  // 임시저장 버퍼
 
@@ -102,7 +108,7 @@ async function readData() {
     }
 }
 
-
+// data 처리하고 변수 할당
 function processData(data) {
   if (data) {
     console.log("Received:", data);
