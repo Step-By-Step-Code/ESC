@@ -8,6 +8,9 @@
 ## M1 (CLASS WEEK 1~2)
 
 ### M1 Youtube Link CLICK [Here]()
-### Arduino Code Explanation Click [Here](./Projects/class_1/)
+### Arduino System Explanation Click [Here](./Projects/class_1/)
+- code Explanation [Here](./Projects/class_1/src/main.cpp)
 ### p5.js Code Explanation Click [Here](./Projects/p5js_M1/)
+- code Explanation [Here](./Projects/p5js_M1/sketch.js)
+
 
