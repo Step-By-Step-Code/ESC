@@ -32,15 +32,10 @@
 ## 기능 설명
 
 ### 1. 기본 신호등 모드
-1. **빨간 LED** 켜짐 (`redTime` 지속) → 꺼짐  
-2. **노란 LED** 켜짐 (`yellowTime` 지속) → 꺼짐
-3. **초록 LED** 켜짐 (`greenTime` 지속) → **깜빡임 후 꺼짐**  
-4. 다시 **1단계로 반복**  
-
-1) `tRedLED`:   Red LED 켜고 redTime 동안 유지 → 끄고
-2) `tYellowLED`: Yellow LED 켜고 yellowTime 동안 유지 → 끄고
-3) `tGreenLED`:  Green LED 켜고 greenTime 동안 유지 → 끄고
-4) `tGreenBlink`: Green LED를 3회 깜빡임
+1) `tRedLED`: Red LED 켜고 redTime 동안 유지 → 끄고 -> 2) 실행
+2) `tYellowLED`: Yellow LED 켜고 yellowTime 동안 유지 → 끄고 -> 3) 실행
+3) `tGreenLED`:  Green LED 켜고 greenTime 동안 유지 → 끄고 -> 4) 실행
+4) `tGreenBlink`: Green LED를 3회 깜빡임 -> 5) 실행
 5) `tYellowLED2`: Yellow LED 켜고 yellowTime 동안 유지 후 다시 1)로 복귀
 
 ### 2. 버튼 조작 모드
