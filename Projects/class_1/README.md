@@ -7,7 +7,7 @@
 ## 회로 구성
 아래는 신호등 시스템을 위한 회로 구성도입니다.
 
-![alt text](image-1.png)
+![alt text](image.png)
 
 ### 사용 부품
 - **Arduino 보드**
@@ -37,12 +37,18 @@
 3. **초록 LED** 켜짐 (`greenTime` 지속) → **깜빡임 후 꺼짐**  
 4. 다시 **1단계로 반복**  
 
+1) `tRedLED`:   Red LED 켜고 redTime 동안 유지 → 끄고
+2) `tYellowLED`: Yellow LED 켜고 yellowTime 동안 유지 → 끄고
+3) `tGreenLED`:  Green LED 켜고 greenTime 동안 유지 → 끄고
+4) `tGreenBlink`: Green LED를 3회 깜빡임
+5) `tYellowLED2`: Yellow LED 켜고 yellowTime 동안 유지 후 다시 1)로 복귀
+
 ### 2. 버튼 조작 모드
 | 버튼  | 기능 설명 | MODE | INTERRUPT |
 |-------|--------------------------------| ------ | ---- |
 | **B1** | **빨간 불 점등 모드 (토글 방식)** | EMERGENCY | FALLING |
 | **B2** | **모든 LED가 깜빡이는 모드 (토글 방식)** | BLINKING | FALLING |
-| **B3** | **모든 LED 소등 후 기본 모드로 복귀** | ON / OFF | FALLING |
+| **B3** | **모든 LED 소등 후 기본 모드로 복귀 ()** | ON / OFF | FALLING |
 
 ### 3. 가변저항 조정
 - **가변저항(A0)** 을 사용하여 **LED 밝기(0~255)** 를 조절할 수 있습니다.

@@ -15,11 +15,11 @@ function setup() {
 
 
   // Slider 생성
-  redSlider = createSlider(100, 2000, 2000, 100);
+  redSlider = createSlider(500, 3500, 2000, 100);
   redSlider.position(10, 100);
-  yellowSlider = createSlider(100, 2000, 500, 100);
+  yellowSlider = createSlider(500, 3500, 500, 100);
   yellowSlider.position(10, 130);
-  greenSlider = createSlider(100, 2000, 2000, 100);
+  greenSlider = createSlider(500, 3500, 2000, 100);
   greenSlider.position(10, 160);
 
   // Slider 이벤트 발생 시 sendData 함수 실행
