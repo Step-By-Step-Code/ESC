@@ -32,6 +32,8 @@
 ## 기능 설명
 
 ### 1. 기본 신호등 모드
+Default : redTime=2000, yellowTime=500, redTime=2000   
+
 1) `tRedLED`: Red LED 켜고 redTime 동안 유지 → 끄고 -> 2) 실행
 2) `tYellowLED`: Yellow LED 켜고 yellowTime 동안 유지 → 끄고 -> 3) 실행
 3) `tGreenLED`:  Green LED 켜고 greenTime 동안 유지 → 끄고 -> 4) 실행
@@ -39,6 +41,7 @@
 5) `tYellowLED2`: Yellow LED 켜고 yellowTime 동안 유지 후 다시 1)로 복귀
 
 ### 2. 버튼 조작 모드
+**다시 누르면 기본동작으로 돌아갑니다**
 | 버튼  | 기능 설명 | MODE | INTERRUPT |
 |-------|--------------------------------| ------ | ---- |
 | **B1** | **빨간 불 점등 모드 (토글 방식)** | EMERGENCY | FALLING |
@@ -46,7 +49,10 @@
 | **B3** | **모든 LED 소등 후 기본 모드로 복귀 ()** | ON / OFF | FALLING |
 
 ### 3. 가변저항 조정
-- **가변저항(A0)** 을 사용하여 **LED 밝기(0~255)** 를 조절할 수 있습니다.
+- **가변저항(A0)** 을 사용하여 **LED 밝기(0~255)** 를 조절할 수 있습니다. 
+- **[실시간 작동이 가능합니다]**
+- **[모든 모드에서 작동합니다]**
 
-### 4. 시리얼 입력 기능
-- **시리얼 모니터를 통해 신호 변경 시간** (`redTime`, `yellowTime`, `greenTime`)을 조정할 수 있습니다.
+### 4. 시리얼 통신 기능
+- **시리얼 통신을 통해 점등 시간** (`redTime`, `yellowTime`, `greenTime`)을 조정할 수 있습니다. **[수신]**
+- Mode, LED_1, LED_2, LED_3, LED Brightness를 **시리얼 통신**을 통해 **송신**합니다.

@@ -12,14 +12,15 @@
 
 ## 실행 방법
 1. **Arduino에 코드 업로드**
-    - PlatformIO/Projects/class_1/src/main.cpp
-    - `9600 baud` 속도로 시리얼 통신 설정
+    - git clone https://github.com/Step-By-Step-Code/ESC
+    - build Projects/class_1  and upload your arduino board 
 
 2. **웹 페이지 실행**
    - p5.js 기반의 웹 페이지를 실행 (`index.html`)
    - **Arduino 연결 버튼 클릭**
 
 ## UI 설명
-- **슬라이더**: 빨강, 노랑, 초록 신호등 점등 시간 설정 (`100ms ~ 2000ms`)
+![alt text](image.png)
+- **슬라이더**: 빨강, 노랑, 초록 신호등 점등 시간 설정 (`500ms ~ 3500ms`)
 - **Connect 버튼**: Arduino와 웹 브라우저를 연결
-- **신호등 UI**: 현재 신호등 상태를 화면에 표시
+- **신호등 UI**: 실시간으로 밝기, 모드, 점등시간, 신호등 상태를 화면에 표시

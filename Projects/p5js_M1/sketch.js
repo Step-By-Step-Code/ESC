@@ -34,6 +34,7 @@ function draw() {
   textSize(16);
 
   fill('black'); 
+  // 점등 시간 텍스트
   text("빨강 시간: " + redSlider.value() + " ms", 200, 115);
   text("노랑 시간: " + yellowSlider.value() + " ms", 200, 145);
   text("초록 시간: " + greenSlider.value() + " ms", 200, 175);
@@ -71,7 +72,7 @@ async function connectToArduino() {
   }
 }
 
-// arduino로 데이터 전송
+// arduino로 점등 시간 데이터 전송
 async function sendData() {
   if (writer) {
     let data = `${redSlider.value()},${yellowSlider.value()},${greenSlider.value()}\n`;
@@ -115,11 +116,11 @@ function processData(data) {
 
     let parts = data.split(",");
     if (parts.length === 5) {
-      modeText = parts[0];
-      redState = parseInt(parts[1]); 
-      yellowState = parseInt(parts[2]); 
-      greenState = parseInt(parts[3]);
-      Brightness = parseInt(parts[4]);
+      modeText = parts[0]; // 모드
+      redState = parseInt(parts[1]); // 빨강 
+      yellowState = parseInt(parts[2]); // 노랑
+      greenState = parseInt(parts[3]); // 초록
+      Brightness = parseInt(parts[4]);// 밝기
       console.log(`Mode: ${modeText}, Red: ${redState}, Yellow: ${yellowState}, Green: ${greenState}, Brightness: ${Brightness}`);
     }
   }
