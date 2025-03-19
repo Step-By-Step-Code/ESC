@@ -13,4 +13,14 @@
 ### p5.js Code System Click [Here](./Projects/p5js_M1/)
 - code Explanation [Here](./Projects/p5js_M1/sketch.js)
 
+## M2 (CLASS WEEK 2~3)
+
+### M2 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=XX_Ik29EIdE)
+### Arduino System Explanation Click [Here](./Projects2/class_1/)
+- code Explanation [Here](./Projects2/class_1/src/main.cpp)
+### p5.js Code System Click [Here](./Projects2/p5js_M1/)
+- code Explanation [Here](./Projects2/p5js_M1/sketch.js)
+
+
+
 
