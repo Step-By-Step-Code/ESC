@@ -21,6 +21,11 @@
 ### p5.js Code System Click [Here](./Projects2/p5js_M1/)
 - code Explanation [Here](./Projects2/p5js_M1/sketch.js)
 
+## M3 (CLASS WEEK 2~3)
+
+### M3 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=XX_Ik29EIdE)
+### p5.js Code System Click [Here](./Projects3/)
+- code Explanation [Here](./Projects3/sketch.js)
 
 
 
