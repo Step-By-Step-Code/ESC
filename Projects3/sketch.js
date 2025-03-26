@@ -57,6 +57,9 @@ function draw() {
     translate(random(-shakeAmount, shakeAmount), random(-shakeAmount, shakeAmount));
   }
   image(video, 0, 0, width, height); // 비디오 이미지 그리기
+  
+  drawHandKeypointsAndConnections(hands); // 손의 키포인트와 연결 그리기
+
   image(drawingLayer, 0, 0, width, height); // 오프스크린 레이어 그리기
   
   // 빨간 사각형 그리기
@@ -93,6 +96,58 @@ function draw() {
   for (let circle of blueCircles) { // 파란 원 그리기
     fill(0, 0, 255, 122);
     ellipse(circle.x, circle.y, circle.size); 
+  }
+}
+
+function drawHandKeypointsAndConnections(hands) {
+  // 손가락 연결 인덱스 배열 (엄지, 검지, 중지, 약지, 새끼손가락)
+  const fingerConnections = [
+    [0, 1, 2, 3, 4],    // 엄지
+    [0, 5, 6, 7, 8],    // 검지
+    [0, 9, 10, 11, 12], // 중지
+    [0, 13, 14, 15, 16],// 약지
+    [0, 17, 18, 19, 20] // 새끼손가락
+  ];
+
+  // 각 손에 대해 작업 진행
+  for (let i = 0; i < hands.length; i++) {
+    // 손의 각 손가락 연결 부분에 초록색 선 그리기
+    stroke(0, 255, 0);
+    strokeWeight(3);
+    for (let finger of fingerConnections) {
+      for (let k = 0; k < finger.length - 1; k++) {
+        let pointA = hands[i].keypoints[finger[k]];
+        let pointB = hands[i].keypoints[finger[k + 1]];
+        line(pointA.x, pointA.y, pointB.x, pointB.y);
+      }
+    }
+
+    // 각 키포인트에 대해 초록색 글로우 효과와 빨간색 마커 추가
+    for (let j = 0; j < hands[i].keypoints.length; j++) {
+      let keypoint = hands[i].keypoints[j];
+
+      // 초록색 키포인트 그리기 (내부 원)
+      noStroke();
+      fill(0, 255, 0);
+      ellipse(keypoint.x, keypoint.y, 12, 12);
+
+      // 초록색 글로우 효과 (원형 그림자)
+      for (let r = 16; r <= 30; r += 4) {
+        fill(0, 255, 0, map(r, 16, 30, 150, 0));
+        ellipse(keypoint.x, keypoint.y, r, r);
+      }
+
+      // 초록색 외곽선 하이라이트
+      noFill();
+      stroke(0, 255, 0, 200);
+      strokeWeight(2);
+      ellipse(keypoint.x, keypoint.y, 32, 32);
+
+      // 빨간색 키포인트 마커 (더 작은 원)
+      noStroke();
+      fill(255, 0, 0);
+      ellipse(keypoint.x, keypoint.y, 8, 8);
+    }
   }
 }
 
