@@ -38,7 +38,8 @@ function draw() {
 
     if (isThreeFingersExtended(hands[i])) threeFingersCount++; // 세 손가락이 펴진 손의 개수 세기
     if (areAllFingersExtended(hands[i])) allFingersCount++; // 다섯 손가락이 펴진 손의 개수 세기
-    // 상자 안의 손이 엄지와 검지 손가락을 펴고 있는지 확인
+   
+    // 상자 안에 있는 손이고 엄지와 검지 손가락이 펴진 손인지 확인
     if (isThumbIndexExtended(hands[i]) && isHandInRedSquare(hands[i])) thumbIndexExtendedInRedSquare = true;
     if (isThumbIndexExtended(hands[i]) && isHandInBlueSquare(hands[i])) thumbIndexExtendedInBlueSquare = true;
   }
@@ -120,7 +121,7 @@ function isOkSign(hand) { // OK 제스처를 인식하는 함수
   let thumbTip = hand.keypoints[4];
   let indexTip = hand.keypoints[8];
   let d = dist(thumbTip.x, thumbTip.y, indexTip.x, indexTip.y); // 엄지 끝과 검지 끝 사이의 거리 계산
-  let okThreshold = 55;
+  let okThreshold = 70;
 
   let wrist = hand.keypoints[0];
   // 중지, 약지, 소지 손가락이 펴져 있는지 확인
