@@ -2,7 +2,7 @@
 이 스크립트는 3개의 GPIO 핀을 이용하여 0부터 7(총 8가지 상태)까지 3비트 이진 카운트를 구현합니다.  
 각 카운트 값에 따라 해당 비트가 1이면 핀을 HIGH(`dh`)로, 0이면 LOW(`dl`)로 설정해 순차적으로 LED를 제어합니다.
 
-## Counter8 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=p6MWzo1YTuc)
+## Counter8 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=ocRj36vOyU8)
 
 ## 사용방법
 
@@ -16,6 +16,9 @@
 | GPIO 18          | 출력 (op)     | LOW (dl)    | 제어 순서의 세 번째 핀         |
 
 ## 회로 구성
+- GPIO 14 : 빨강색 케이블
+- GPIO 15 : 주황색 케이블
+- GPIO 18 : 노란색 케이블
 ![alt text](image.png)
 
 ## 코드 구성과 설명
