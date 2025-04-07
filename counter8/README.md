@@ -19,6 +19,7 @@
 - GPIO 14 : 빨강색 케이블
 - GPIO 15 : 주황색 케이블
 - GPIO 18 : 노란색 케이블
+
 ![alt text](image.png)
 
 ## 코드 구성과 설명
