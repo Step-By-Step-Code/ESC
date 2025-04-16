@@ -1,7 +1,7 @@
 # Domino4 Homework explanation
 GPIO 핀 14, 15, 18, 23을 배열에 저장한 후, 각 핀을 출력 모드로 설정하고 초기 상태를 LOW로 설정합니다. 무한 루프 내에서 각 핀을 순차적으로 HIGH로 전환한 후 1초 동안 대기하고 다시 LOW로 전환하여 핀의 상태를 변화시킵니다. 스크립트 종료 시 모든 핀을 LOW로 재설정하는 cleanup 함수를 호출하여 안전한 종료를 보장합니다.
 
-## Domino4 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=KlBhNfm7fUY)
+## Domino4 Youtube Link CLICK [Here](https://www.youtube.com/shorts/xYMsEfJHRVQ)
 
 ## 핀맵 설명
 ![alt text](image-1.png)
