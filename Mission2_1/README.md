@@ -2,7 +2,7 @@
 - GPIO Zero 라이브러리를 사용해 버튼 입력에 따라 LED를 제어합니다.
 - 버튼을 누르고 있는 동안 LED가 켜지고, 버튼에서 손을 떼면 LED가 꺼집니다.
 
-## M2_1 Youtube Link CLICK [Here](https://www.youtube.com/shorts/m2OIx202eTc)
+## M2_1 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=AdsP75HsIpQ)
 
 ## 사용 방법
 
@@ -14,17 +14,15 @@ python M1.py
 3. 터미널에 안내 메시지가 출력됩니다. 버튼을 누르고 있으면 LED가 켜집니다.
 
 ## 핀맵 설명
-
-![alt text](image1.png)
 | **GPIO 핀 번호** | **모드 설정** | **설명**                     |
 |------------------|-------------|------------------------------|
 | GPIO 25          | 입력 (버튼)   | 풀업(pull_up) 사용, 버튼 연결        |
-| GPIO 8        | 출력 (LED)  | 버튼 누름 상태 표시용 LED        |
+| GPIO 12        | 출력 (LED)  | 버튼 누름 상태 표시용 LED        |
 
 ## 회로 구성
 ```
 GPIO 25 ----[버튼]------GPIO 25
-GPIO GND---LED(저항)----GPIO 8
+GPIO GND---LED(저항)----GPIO 12
 ```
 ## 코드 구성과 설명
 
@@ -35,11 +33,11 @@ from signal import pause
 
 # 버튼과 LED 초기화
 button = Button(25, pull_up=True)
-led = LED(8)
+led = LED(12)
 ```
 - GPIO25를 입력으로 설정, 내부 풀업 저항 활성화
 
-- GPIO8을 출력으로 설정하여 LED 제어 준비
+- GPIO12을 출력으로 설정하여 LED 제어 준비
 
 ### 이벤트 핸들러 바인딩
 ```python
@@ -51,6 +49,20 @@ def light_while_pressed(button: Button, led: LED):
 light_while_pressed(button, led)
 ```
 - when_pressed, when_released 콜백을 통해 버튼 상태 변화에 반응
+
+### 종료 처리
+```python
+def cleanup():
+    led.off()
+    print("LED reset to OFF. Exiting.")
+
+# 종료 시 cleanup 함수 등록
+atexit.register(cleanup)
+```
+- cleanup() 함수에서 LED를 OFF 상태로 설정하고 종료 메시지 출력
+
+- atexit.register(cleanup) 호출로 스크립트가 종료될 때 항상 cleanup() 실행
+
 
 ### 프로그램 유지 (대기)
 ```python

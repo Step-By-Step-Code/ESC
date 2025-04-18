@@ -1,7 +1,7 @@
 # 버튼이 눌릴 때마다 4-bit 카운터 값 증가시키기
 - GPIO Zero 라이브러리를 사용해 버튼을 누를 때마다 4비트 LED에 이진 카운트를 표시합니다.
 
-## M2_3 Youtube Link CLICK [Here](https://www.youtube.com/shorts/m2OIx202eTc)
+## M2_4 Youtube Link CLICK [Here](https://www.youtube.com/watch?v=ujHqZhecUhc)
 
 ## 사용 방법
 
@@ -14,14 +14,13 @@ python M4.py
 
 ## 핀맵 설명
 
-![alt text](image1.png)
 | **GPIO 핀 번호** | **모드 설정** | **설명**                     |
 |------------------|-------------|------------------------------|
 | GPIO 25          | 입력 (버튼)   | 풀업(pull_up) 사용, 버튼 연결        |
-| GPIO 8        | 출력 (LED1)     | 카운트 비트0 (LSB) 표시       |
-| GPIO 7        | 출력 (LED2)     | 카운트 비트1 표시       |
-| GPIO 16        | 출력 (LED3)     | 카운트 비트2 표시       |
-| GPIO 20       | 출력 (LED4)     | 카운트 비트3 (MSB) 표시       |
+| GPIO 12      | 출력 (LED1)     | 카운트 비트0 (LSB) 표시       |
+| GPIO 16        | 출력 (LED2)     | 카운트 비트1 표시       |
+| GPIO 20        | 출력 (LED3)     | 카운트 비트2 표시       |
+| GPIO 21       | 출력 (LED4)     | 카운트 비트3 (MSB) 표시       |
 
 
 
@@ -30,10 +29,10 @@ python M4.py
 ## 회로 구성
 ```
 [3.3V]----[버튼]----GPIO25
-GPIO GND---[저항]---LED1----GPIO8
-GPIO GND---[저항]---LED2----GPIO7
-GPIO GND---[저항]---LED3----GPIO16
-GPIO GND---[저항]---LED4----GPIO20
+GPIO GND---[저항]---LED1----GPIO12
+GPIO GND---[저항]---LED2----GPIO16
+GPIO GND---[저항]---LED3----GPIO20
+GPIO GND---[저항]---LED4----GPIO21
 ```
 
 ## 코드 구성과 설명
@@ -46,7 +45,7 @@ import time
 
 # 사용할 GPIO 핀 번호 설정
 SW_PIN = 25
-GPIO_PINS = [8, 7, 16, 20]
+GPIO_PINS = [12, 16, 20, 21]
 
 # 버튼과 LED 리스트 초기화
 button = Button(SW_PIN, pull_up=True)
@@ -75,18 +74,12 @@ def update_leds(value):
 ### increment_count 함수
 ```python
 def increment_count():
-    global count
-    button.when_pressed = None  # 중복 실행 방지
-    try:
-        count = (count + 1) % 16
-        update_leds(count)
-        print(f"Count: {count:04b} ({count})")
-    finally:
-        button.when_pressed = increment_count  # 콜백 복원
+    global count  # Declare count as global to modify the global variable
+    count = (count + 1) % 16
+    update_leds(count)
 ```
 
 - count를 0~15 범위로 증가시키고, update_leds로 LED 업데이트
-- 실행 중 추가 버튼 입력을 막았다가, 완료 후 다시 이벤트 바인딩
 
 ### 이벤트 바인딩
 ```python
@@ -94,11 +87,28 @@ button.when_pressed = increment_count
 ```
 - 버튼을 누를 때마다 increment_count 함수 호출
 
+### 종료 처리
+```python
+# 종료 시 모든 LED를 끄는 함수
+def cleanup():
+    for led in leds:
+        led.off()
+    print("LED reset to OFF. Exiting.")
+
+# 종료 시 cleanup 함수 호출
+atexit.register(cleanup)
+```
+- cleanup() 함수에서 LED를 OFF 상태로 설정하고 종료 메시지 출력
+
+- atexit.register(cleanup) 호출로 스크립트가 종료될 때 항상 cleanup() 실행
+
 ### 프로그램 유지 (대기)
 ```python
 if __name__ == "__main__":
+    # 시작 시 초기 상태 표시
+    update_leds(count)
     print("Waiting for button press...")
-    pause()  # 프로그램이 종료되지 않도록 블록 상태로 대기
+    pause()  # 무한 대기
 ```
 - pause()는 메인 스레드를 블록 상태로 유지하여, 버튼 이벤트 감지가 계속 이루어지게 합니다.
 

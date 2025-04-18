@@ -1,12 +1,23 @@
 from gpiozero import Button, LED
 from signal import pause
+import atexit
+
 
 # 버튼과 LED 초기화 (예: SW_PIN=25, LED_PIN=8)
 button = Button(25, pull_up=True)
-led = LED(8)
+led = LED(12)
 
 # 버튼이 눌릴 때마다 LED를 토글하도록 이벤트 바인딩
 button.when_pressed = led.toggle
+
+# 종료 시 모든 LED를 끄는 함수
+def cleanup():
+    led.off()
+    print("LED reset to OFF. Exiting.")
+
+# 종료 시 cleanup 함수 호출
+atexit.register(cleanup)
+
 
 if __name__ == "__main__":
     print("버튼을 누를 때마다 LED가 켜졌다 꺼졌다 합니다.")

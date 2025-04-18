@@ -1,10 +1,11 @@
 from gpiozero import Button, LED
 from signal import pause
 import time
+import atexit
 
 # 사용하는 GPIO 핀 번호 설정
 SW_PIN = 25
-GPIO_PINS = [8, 7, 16, 20]    
+GPIO_PINS = [12, 16, 20, 21]    
 
 # 버튼과 LED 초기화
 button = Button(SW_PIN, pull_up=True)
@@ -23,17 +24,21 @@ def update_leds(value):
             led.off()
 
 def increment_count():
-    global count # 사전에 정의한 전역 변수 사용
-    button.when_pressed = None # 콜백 해제하여 코드 안정성 확보
-    try:
-        count = (count + 1) % 16
-        update_leds(count)
-        print(f"Count: {count:04b} ({count})")
-    finally:
-        button.when_pressed = increment_count # 콜백 복원
+    global count  # Declare count as global to modify the global variable
+    count = (count + 1) % 16
+    update_leds(count)
 
 
 button.when_pressed = increment_count
+
+# 종료 시 모든 LED를 끄는 함수
+def cleanup():
+    for led in leds:
+        led.off()
+    print("LED reset to OFF. Exiting.")
+
+# 종료 시 cleanup 함수 호출
+atexit.register(cleanup)
 
 if __name__ == "__main__":
     # 시작 시 초기 상태 표시

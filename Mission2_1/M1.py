@@ -1,9 +1,10 @@
 from gpiozero import Button, LED
 from signal import pause
+import atexit
 
-# 버튼과 LED 초기화 (예: SW_PIN=25, LED_PIN=8)
+# 버튼과 LED 초기화 (예: SW_PIN=25, LED_PIN=12)
 button = Button(25, pull_up=True)
-led = LED(8)
+led = LED(12)
 
 # 버튼이 눌린 동안 LED를 켜고 떼면 끄는 함수
 def light_while_pressed(button: Button, led: LED):
@@ -12,6 +13,14 @@ def light_while_pressed(button: Button, led: LED):
 
 # 신호가 왔을 때 함수를 호출하도록 설정
 light_while_pressed(button, led)
+
+# 종료 시 모든 LED를 끄는 함수
+def cleanup():
+    led.off()
+    print("LED reset to OFF. Exiting.")
+
+# 종료 시 cleanup 함수 호출
+atexit.register(cleanup)
 
 if __name__ == "__main__":
     print("Press and hold the button to light the LED.")

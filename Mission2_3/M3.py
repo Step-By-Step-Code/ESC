@@ -1,10 +1,11 @@
 from gpiozero import Button, LED
 from signal import pause
 import time
+import atexit
 
 # 사용하는 GPIO 핀 번호 설정
 SW_PIN = 25
-GPIO_PINS = [8, 7, 16, 20]    
+GPIO_PINS = [12, 16, 20, 21]
 
 # 버튼과 LED 초기화
 button = Button(SW_PIN, pull_up=True)
@@ -25,6 +26,15 @@ def domino_sequence():
 
 # Assign the domino sequence to the button press event
 button.when_pressed = domino_sequence
+
+# 종료 시 모든 LED를 끄는 함수
+def cleanup():
+    for led in leds:
+        led.off()
+    print("LED reset to OFF. Exiting.")
+
+# 종료 시 cleanup 함수 호출
+atexit.register(cleanup)
 
 # Keep the program running to listen for button presses
 if __name__ == "__main__":
