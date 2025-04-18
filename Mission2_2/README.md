@@ -40,21 +40,17 @@ led = LED(8)
 
 - GPIO8을 출력으로 설정하여 LED 제어 준비
 
-### 이벤트 핸들러 바인딩
+### 이벤트 바인딩
 ```python
-def light_while_pressed(button: Button, led: LED):
-    button.when_pressed = led.on     # 버튼 눌림 시 LED 켜기
-    button.when_released = led.off  # 버튼 떼면 LED 끄기
-
-# 함수 호출로 이벤트 바인딩
-light_while_pressed(button, led)
+# 버튼이 눌릴 때마다 LED 상태를 토글
+button.when_pressed = led.toggle
 ```
-- when_pressed, when_released 콜백을 통해 버튼 상태 변화에 반응
+- when_pressed 콜백에 led.toggle을 등록하여, 버튼을 누를 때마다 LED가 켜졌다 꺼졌다 반복
 
 ### 프로그램 유지 (대기)
 ```python
 if __name__ == "__main__":
-    print("Press and hold the button to light the LED.")
-    pause()  # 신호가 올 때까지 대기, 프로그램 종료 방지
+    print("버튼을 누를 때마다 LED가 켜졌다 꺼졌다 합니다.")
+    pause()  # 메인 스레드를 블록 상태로 유지하여 이벤트 감지가 계속되도록 함
 ```
 - pause()는 메인 스레드를 블록 상태로 유지하여 이벤트 감지가 계속되도록 함
